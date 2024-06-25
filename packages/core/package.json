@@ -93,7 +93,6 @@
   },
   "scripts": {
     "build": "pnpm css && pnpm providers && tsc",
-    "postinstall": "pnpm css && pnpm providers && tsc",
     "clean": "rm -rf *.js *.d.ts* lib providers",
     "css": "node scripts/generate-css",
     "dev": "pnpm css && pnpm providers && tsc -w",
