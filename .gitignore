@@ -31,11 +31,11 @@ dist
 packages/next-auth/providers
 # copied from @auth/core
 packages/frameworks-*/**/providers
-#packages/*/*.js
-#packages/*/*.d.ts
-#packages/*/*.d.ts.map
+packages/*/*.js
+packages/*/*.d.ts
+packages/*/*.d.ts.map
 #packages/*/lib
-#packages/**/generated
+packages/**/generated
 .xata*
 
 # Qwik needs to use .mjs. REVIEW: Check back, can we just use .js?
@@ -87,10 +87,10 @@ docs/.next
 docs/manifest.mjs
 
 # Core
-packages/core/src/providers/oauth-types.ts
-packages/core/lib
-packages/core/providers
-packages/core/src/lib/pages/styles.ts
+#packages/core/src/providers/oauth-types.ts
+#packages/core/lib
+#packages/core/providers
+#packages/core/src/lib/pages/styles.ts
 docs/docs/reference/core
 
 # Next.js
