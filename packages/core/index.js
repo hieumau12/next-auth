@@ -36,7 +36,7 @@
  * @module @auth/core
  */
 import { assertConfig } from "./lib/utils/assert.js";
-import { AuthError, CredentialsSignin, ErrorPageLoop, isClientError, } from "./errors.js";
+import { AuthError, ErrorPageLoop, isClientError, } from "./errors.js";
 import { AuthInternal, raw, skipCSRFCheck } from "./lib/index.js";
 import { setEnvDefaults, createActionURL } from "./lib/utils/env.js";
 import renderPage from "./lib/pages/index.js";
@@ -128,8 +128,10 @@ export async function Auth(request, config) {
         const isClientSafeErrorType = isClientError(error);
         const type = isClientSafeErrorType ? error.type : "Configuration";
         const params = new URLSearchParams({ error: type });
-        if (error instanceof CredentialsSignin)
-            params.set("code", error.code);
+        if (isAuthError) {
+            // @ts-ignore
+            params.set("code", error['code']);
+        }
         const pageKind = (isAuthError && error.kind) || "error";
         const pagePath = config.pages?.[pageKind] ?? `${config.basePath}/${pageKind.toLowerCase()}`;
         const url = `${internalRequest.url.origin}${pagePath}?${params}`;

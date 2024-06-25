@@ -184,7 +184,10 @@ export async function Auth(
     const type = isClientSafeErrorType ? error.type : "Configuration"
 
     const params = new URLSearchParams({ error: type })
-    if (error instanceof CredentialsSignin) params.set("code", error.code)
+    if (isAuthError) {
+      // @ts-ignore
+      params.set("code", error['code'])
+    }
 
     const pageKind = (isAuthError && error.kind) || "error"
     const pagePath =
