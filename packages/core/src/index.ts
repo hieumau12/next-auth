@@ -184,9 +184,11 @@ export async function Auth(
     const type = isClientSafeErrorType ? error.type : "Configuration"
 
     const params = new URLSearchParams({ error: type })
+
+    let responseError : any = undefined
     if (isAuthError) {
       // @ts-ignore
-      params.set("code", error['code'])
+      responseError = error
     }
 
     const pageKind = (isAuthError && error.kind) || "error"
@@ -194,7 +196,7 @@ export async function Auth(
       config.pages?.[pageKind] ?? `${config.basePath}/${pageKind.toLowerCase()}`
     const url = `${internalRequest.url.origin}${pagePath}?${params}`
 
-    if (isRedirect) return Response.json({ url })
+    if (isRedirect) return Response.json({ url, error: responseError })
     return Response.redirect(url)
   }
 }

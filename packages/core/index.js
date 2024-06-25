@@ -128,15 +128,16 @@ export async function Auth(request, config) {
         const isClientSafeErrorType = isClientError(error);
         const type = isClientSafeErrorType ? error.type : "Configuration";
         const params = new URLSearchParams({ error: type });
+        let responseError = undefined;
         if (isAuthError) {
             // @ts-ignore
-            params.set("code", error['code']);
+            responseError = error;
         }
         const pageKind = (isAuthError && error.kind) || "error";
         const pagePath = config.pages?.[pageKind] ?? `${config.basePath}/${pageKind.toLowerCase()}`;
         const url = `${internalRequest.url.origin}${pagePath}?${params}`;
         if (isRedirect)
-            return Response.json({ url });
+            return Response.json({ url, error: responseError });
         return Response.redirect(url);
     }
 }
